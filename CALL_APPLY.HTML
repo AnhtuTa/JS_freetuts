@@ -1,0 +1,123 @@
+<html>
+<head>
+    <script>
+        //viết bằng cách thông thường
+        function myProfile(name, age){
+            console.log(name);
+            console.log(age);
+            //return this;
+        }
+        myProfile("Anhtu ta", 23);
+
+        //using call method
+        function myProfile(name, age){
+            console.log(name);
+            console.log(age);
+            //return this;
+        }
+        myProfile.call(myProfile, "Anhtu ta", 23);
+        myProfile.call(null, "Anhtu ta", 23);
+        
+        //một số cách sử dụng hàm call rất thông dụng.
+        //Dùng hàm call gán giá trị cho hàm khởi tạo
+        function InitProduct(name, price) {
+            this.name = name;
+            this.price = price;
+            this.getInfo = function() {
+                return this.name + " - " + this.price;
+            }
+        }
+        function Food(name, price) {
+            // Khởi tạo
+            // biến this chính là Food, vì vậy sau khi chạy xong đối tượng Food sẽ có hai
+            // thuộc tính là name và price, và 1 thuộc tính getInfo là 1 function
+            InitProduct.call(this, name, price);
+            //InitProduct.call(this, price);
+        }
+        var meat = new Food("Thịt lợn", 75);
+        console.log(meat.getInfo());
+        console.log(meat);
+        // var fish = Food("Cá", 102);  //Nếu ko dùng từ khóa new thì ko đc!
+        // console.log(fish.name);
+
+        //Dùng hàm call để gọi hàm anonymous
+        //Giả sử bạn tạo một hàm anonymous không có tên, lúc này bạn có thể sử dụng hàm call để thực thi hàm đó.
+        (function(name) {
+            console.log(name);
+        }).call(this, "Anhtuta");
+
+        //Nếu ko dùng call mà gọi luôn thì KHÔNG đc!
+        (function(name) {
+            console.log(name);  //undefined
+        })();
+
+        //Dùng hàm call để đổi giá trị của this
+        //Trong một hàm thì this chính là hàm đó, tuy nhiên bạn hoàn toàn có thể thay đổi đối tượng this trong hàm bằng cách sử dụng hàm call
+        function showMessage(message) {
+            this.message = message;
+            return this;
+        }
+        
+        var blog = showMessage("This is message");
+        console.log(blog);  //blog là đối tượng window
+        console.log(blog.message);  //kq in ra console: This is message (tức là window tạo thêm 1 thuộc tính message, có giá trị là "This is message")
+
+        var blog = new showMessage("This is message");
+        console.log(blog);  //blog là đối tượng showMessage
+        console.log(blog.message);
+
+        //tham số thứ nhất là object ta muốn gán cho this, các tham số sau đó là các thuộc tính của object. 
+        //Chú ý: key "my blog" PHẢI để trong dấu "" vì key có dấu cách. Nếu ko có dấu cách thì ko cần
+        var blog = showMessage.call({"my blog" : "tutocxu.wordpress.com"}, "Hello Anhtu");
+        console.log(blog);  //blog là đối tượng trong tham số của hàm call ở trên
+        console.log(blog.message);     //Hello Anhtu
+
+        //ví dụ ngay ở trên, nếu viết tường minh ra thì dễ hiểu hơn:
+        var demoObject = {
+            my_blog: "tutocxu.wordpress.com"  //my_blog ko có dấu cách nên ko cần dấu ""
+        }
+        var newObject = showMessage.call(demoObject, "Hello world");    //CHÚ Ý: KHÔNG có từ new nhé: newObject = new showMessage.call... là SAI!!!
+        console.log(newObject);     //newObject có thể 1 thuộc tính là message được tạo từ lệnh ở trên
+        console.log(newObject.message);
+        //Có thể coi showMessage là 1 class, và newObject là 1 object (instance) của class đó
+
+        /*=========== Hàm apply =========*/
+        //Tham số đầu tiên của hàm call() là đối tượng this, tiếp theo chính là các tham số của hàm cần gọi.
+        //Tham số đầu tiên của hàm apply() là đối tượng this, tham số tiếp theo là một mảng chứa các tham số của hàm cần gọi.
+        var sayHello = function(name, message){
+            console.log(message + name);
+        };
+
+        //3 thằng sau cho kq giống nhau
+        sayHello.call(sayHello, 'att', ' Xin chào ');
+        sayHello.apply(sayHello, ['att', ' Xin chào ']);
+        sayHello("att", ' Xin chào ');
+        console.log("\n=======================\n")
+
+        /*=========== another example =========*/
+        //class Student
+        function Student(id, name) {
+            this.id = id;
+            this.name = name;
+            this.getInfo = function() {
+                return this.id + " - " + this.name;
+            }
+            return this;
+        }
+
+        var att = new Student(13, "Tu95");
+        console.log(att);
+        var huy = Student.call({school: "HUST", address: "Hanoi, VN"}, 15, "Huy ga");
+        console.log(huy);
+        var toan = Student.apply({school: "HUST", address: "Bac Giang, VN"}, [15, "Toan"]);
+        console.log(toan);
+        /*
+        Giải thích:
+        dùng hàm call nên {school: "HUST", address: "Hanoi, VN"} sẽ thay cho this, tức là
+        đối tượng huy lúc đó sẽ là huy = {school: "HUST", address: "Hanoi, VN"}
+        sau đó có thể 2 tham số ở đằng sau, bây giờ đối tượng huy có thêm 3 thuộc tính mới
+        là: id=15, name="Huy ga" và getInfo. Vậy cuối cùng huy = {school: "HUST", address: "Hanoi, VN", id: 15, name: "Huy ga", getInfo: ƒ}
+        */
+    </script>
+</head>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <h3>Code này khá vớ vẩn và đã lỗi thời!</h3>
+</body>
+<script type="text/javascript">
+    function internetConnectionExist() {
+        var xhr = new XMLHttpRequest();
+        var file = "https://freetuts.net/public/logo.png";
+        var randomNum = Math.round(Math.random() * 10000);
+
+        xhr.open('HEAD', file + "?rand=" + randomNum, false);
+
+        try {
+            xhr.send();
+
+            if (xhr.status >= 200 && xhr.status < 304) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (e) {
+            return false;
+        }
+    }
+
+    setTimeout(function(){
+        if(internetConnectionExist()) {
+            console.log("internet is OK");
+        } else {
+            console.log("There's no internet connection!");
+        }
+    }, 1000);
+</script>
+</html>

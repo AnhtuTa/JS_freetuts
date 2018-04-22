@@ -1,0 +1,155 @@
+<html>
+<head>
+<title></title>
+<script type="text/javascript">
+	//create new Object
+	var Comment = {
+		title : "",
+		content : "",
+		username : "",
+		addComment : function(data) {
+			this.content = data;
+		},
+		getDetails : function() {
+			return this.title + " | " + this.content + " | " + this.username;
+		}
+	}
+
+	//var c1 = new Comment(); //Uncaught TypeError: Comment is not a constructor
+
+	Comment.title = "this is title";
+	Comment.addComment("This is content of comment");
+	Comment.username = "Anhtu";
+	console.log(Comment.getDetails());
+
+	//CHÚ Ý: Comment là 1 đối tượng, chứ ko phải 1 class, do đó ko có constructor và ko cần khởi tạo gì cả!
+
+	//Another example about Object
+	var nguyenbka = {
+		name : "Nguyen bka",
+		address : "HCMC",
+		sayHello : function() {
+			console
+					.log(`Hello world, I am ${this.name}. And I come from ${this.address}`);
+		}
+	}
+	nguyenbka.sayHello();
+
+	/*============ Array demp ==============*/
+	var fruits = [ "mango", "guava", "strawberry", "apple", "banana" ];
+	console.log(fruits.valueOf());
+	console.log(fruits);
+	for (var i = 0; i < fruits.length; i++) {
+		console.log(fruits[i]);
+	};
+
+	//thêm một phần tử vào cuối mảng
+	fruits.push("orange");
+	fruits.push("watermelon");
+	console.log(fruits);
+
+	//xóa đi phần tử cuối cùng trong mảng
+	fruits.pop();
+	console.log(fruits);
+
+	//array.shift(): Hàm xóa phần tử đầu tiên của mảng
+	fruits.shift();
+	console.log(fruits);
+
+	//array.unshift(): Thêm một phần tử vào vị trí đầu tiên của mảng
+	fruits.unshift("plum");
+	console.log(fruits);
+
+	//splice demo
+	var mang = [ "Học", "lập", "trình", "tại", "freetuts.net" ];
+	mang.splice(1, 2, 'PHP', 'căn bản ');
+	console.log(mang.valueOf()); //["Học", "PHP", "căn bản ", "tại", "freetuts.net"]
+
+	//xóa 1 phần tử ở vị trí k: splice(k,1)
+	//xóa a phần tử ở vị trí k: splice(k,a)
+	fruits.splice(3, 1);
+	console.log(fruits);
+
+	//sắp xếp các phần tử trong mảng theo thứ tự chữ cái alpha
+	fruits.sort();
+	console.log(fruits);
+
+	//Hàm đảo ngược các phẩn tử lại
+	fruits.reverse();
+	console.log(fruits);
+
+	//slice(): Hàm dùng để lấy một số phần tử con trong mảng. Có hai tham số truyền vào như sau: slice(start, end).
+	//Trong đó:
+	//start: là vị trí bắt đầu
+	//end: là vị trí kết thúc
+	//Lưu ý: Để dễ hiểu thì start sẽ phần tử đầu tiên là 0 và end sẽ tính phần tử đầu tiên là 1. Chính vì vậy bạn sẽ phải cộng thêm 1 ở end thì mới lấy đúng phần tử mong muốn
+	//Trường hợp bạn muốn lấy từ vị trí nào đó đến cuối mảng thì bạn sẽ truyền một tham số thôi
+	var mang = [ "Học", "lập", "trình", "tại", "freetuts.net" ];
+	// Lấy phần tử "tại" và "freetuts.net"
+	var mang_moi = mang.slice(3, 5);
+	console.log(mang_moi); // ["tại", "freetuts.net"]
+
+	/*============== Prototype ===============*/
+	var num = Number(13);
+	Number.prototype.plus = function(value) {
+		return this.valueOf() + parseInt(value);
+	}
+	console.log(num.plus(5));
+
+	//Chúng ta đã được học cách tạo mới Object với từ khóa new Object và {} rồi nhưng khi tạo bằng hai cách này ta không thể sử dụng từ khóa new để khởi tạo mới một đối tượng được
+	//var Person = {};
+	// Sai, không hoạt động
+	//var p = new Person();
+	//Vậy có một cách khác có thể giải quyết được đó là thông qua hàm trong Javascript.
+	function Person() {
+		this.name = "";
+		this.address = "";
+		this.showInfo = function() {
+			console.log(this.name + " - " + this.address);
+		}
+	}
+
+	var huyga = new Person();
+	huyga.name = "Huy ga";
+	huyga.address = "Hanoi";
+	huyga.showInfo();
+
+	Person.prototype.gender = "";
+	Person.prototype.getGender = function() {
+		return this.gender;
+	}
+	Person.prototype.setGender = function(gender) {
+		this.gender = gender;
+	}
+	Person.prototype.showFullInfo = function() {
+		console.log(this.name + " - " + this.address + " - " + this.gender);
+	}
+
+	huyga.setGender("Lesbian");
+	huyga.showFullInfo();
+
+	/* Trong các VD trên thì Comment là 1 đối tượng, trong khi đó Person có thể coi như
+	1 class, vì có thể khởi tạo nhiều Person thông qua hàm Person(), trong khi đó
+	ko thể làm vậy với Comment*/
+
+	/*=========== Try catch demo ==============*/
+	var myname = "taanhtu95";
+	var myAge = 17;
+	var a = 5, b = 0;
+	try {
+		console.log(myname / b);
+	} catch (e) {
+		console.log("Error: " + e.message);
+	}
+	try {
+		if (myAge < 18)
+			throw new Error("Mày chưa đủ tuổi!");
+	} catch (e) {
+		console.log("Error: " + e.message);
+	}
+</script>
+</head>
+<body>
+
+</body>
+</html>

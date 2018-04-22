@@ -1,0 +1,94 @@
+<!DOCTYPE HTML>
+<head>
+	<title>JS examples</title>
+	<style>
+	th, td, input {
+		padding: 5px;
+	}
+	.error_msg {
+		color: red;
+	}
+	pre {
+		font-family: Consolas;
+		border: 2px solid #4986ff;
+	}
+	#d1 {
+		color: blue;
+		font-weight: bold;
+	}
+	</style>
+	
+	<script type="text/javascript">
+		function copySuccess() {
+			//alert("Copy Success");
+			var d1 = document.getElementById("d1");
+			d1.innerHTML = "copied!";
+		}
+		
+		function removeCopyInfo() {
+			var d1 = document.getElementById("d1");
+			d1.innerHTML = "";
+		}
+		
+		var windowChild = null;
+		function openWindow() {
+			windowChild = window.open('https://freetuts.net', "windowChild", "width=500, height=500");
+			return false;
+		}
+        function closeWindow() {
+			windowChild.close()
+			return false;
+        }
+	</script>
+</head>
+<body>
+	<pre oncopy="copySuccess()" onmouseleave="removeCopyInfo()">
+	
+	#911ac9 = tím (purple)
+	#20e547 = green
+	#dd00dd = purple
+	#ff00ff = pink
+	#f4427a = pink red(đẹp vl)
+	#f0f0f0 = light-gray
+	#1a5fce = blue
+	#5495ff , #4986ff = blue nhạt hơn
+	#2ebdd3 = cyan đậm
+	#f6ff00 = yellow
+	#c6c6c6, #b8b8b8 = gray
+	RGB(48, 10, 36) = #300a24 = ubuntu terminal
+	transition: all 0.5s;
+
+	-Tốc độ truy xuất:
+	HDD -> SSD -> RAM -> Cache -> register
+	- margin -> outline -> border -> padding -> nội dung
+	- Study something new: read books, slide slowly!
+	- chkdsk G: /f
+	- muốn tải video của fb: chuyển sang dạng mobile: m.fb.com/...
+	- .NET Framework là nền tảng để chạy các ứng dụng viết = NNLT của Microsoft, hay gọi là môi trường lập trình, môi trường phát triển ƯD
+	- 1 số ngôn ngữ mà .NET Framework  có thể biên dịch: C/C++, C#, VB, JScript...
+
+
+	cài đặt màu chữ trong eclipse: Window>Preferences>Java>Editor>Syntax coloring
+
+	- cài đặt font: General → Appearance → Colors and Fonts → Basic  → Text Font).
+	- cài màu chữ: Window > Preferences > Java > Editor > Syntax Coloring
+
+	cookie: lưu trữ thông tin của người dùng (VD: acc fb) tại bộ nhớ của máy
+	session: lưu trữ thông tin của người dùng trên server
+	(Do lưu trữ như vậy nên lúc vào fb ko cần login mà máy dùng data đó để login luôn)
+
+	Giấu warning khi ko cần thiết:
+	@SuppressWarnings("unchecked")
+
+	khi run servlet: muốn hiển thị yêu cầu có restart server hay ko, vào:
+	Preference>server>lanching>tích vào "Automatically pulish when..."
+	- KMPlayer: nếu phụ đề chậm hơn lời nói => giảm phụ đề
+	
+	<span id="d1"></span>
+	</pre>
+	
+	<h2>BOM demo</h2>
+	<a href="#" onclick="return openWindow()">Open freetuts</a>
+	<a href="#" onclick="return closeWindow()">Close freetuts</a>
+</body>
+</html>

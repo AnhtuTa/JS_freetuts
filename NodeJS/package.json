@@ -1,0 +1,14 @@
+{
+  "name": "nodejs-freetuts",
+  "version": "1.0.0",
+  "description": "NodeJS tutorials",
+  "main": "json_demo.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Anhtu",
+  "license": "ISC",
+  "dependencies": {
+    "node-persist": "^3.0.0"
+  }
+}

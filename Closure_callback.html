@@ -1,0 +1,174 @@
+<!-- Closure_callback.html -->
+<html>
+<head>
+<title></title>
+<script type="text/javascript">
+	//============ closure ko tham số
+	function showMessage(msg) {
+		return function() {
+			console.log("[freetuts.net] " + msg);
+		}
+	}
+
+	var msgFunc = showMessage("Hello world!");
+	console.log(msgFunc); //kq in ra là 1 function
+	msgFunc(); //thực thi hàm closure
+
+	//============ Closure có tham số
+	function showMessage2(msg) {
+		return function(loopTime) {
+			if (loopTime == 0)
+				console.log("loopTime == 0");
+			for (i = 1; i <= loopTime; i++) {
+				console.log("[freetuts.net] i = " + i + ": " + msg);
+			}
+		}
+	}
+	var msgFunc2 = showMessage2("Hello closure in JS");
+	msgFunc2(3);
+	msgFunc2(); //ko làm gì cả
+	msgFunc2(0); //in ra kq: loopTime == 0
+
+	//Return nhiều Closure Function
+	function multiClosure(msg) {
+		return {
+			func1 : function() {
+				console.log('Closure1: ' + msg);
+			},
+			func2 : function() {
+				console.log('Closure2: ' + msg);
+			}
+		};
+	}
+	var mc = new multiClosure("Hello att"); //nếu dùng new thì bản chất giống class hơn!
+	mc.func1();
+	var mc = multiClosure("Hello att"); //ko có new vẫn đc
+	mc.func1();
+	var mc = multiClosure("Hello att");
+	var temp = mc.func2;
+	temp("Huy ga");
+
+	//============ Closure thay đổi giá trị biến toàn cục lẫn cục bộ
+	function Student() {
+		var name = '';
+		var age = '';
+
+		return {
+			setInfo : function(in_name, in_age) {
+				name = in_name;
+				age = in_age;
+			},
+			getName : function() {
+				return name;
+			},
+			getAge : function() {
+				return age;
+			}
+		};
+	}
+
+	// Bước 2: khởi tạo hàm closure
+	var studentObj = Student();
+
+	// Bước 3: Chạy hàm closure
+	studentObj.setInfo('Nguyễn Văn Cường', '27');
+	console.log(studentObj.getName());
+	console.log(studentObj.getAge());
+
+	//============ Độ ưu tiên các biến, Thứ tự ưu tiên như ở comment
+	var message = 'Biên toàn cục'; //(3)
+	function showMessage() {
+		var message = 'Biến cục bộ của hàm cha'; //(2)
+		return function() {
+			var message = 'Biến cục bộ của nó'; //(1)
+			console.log(message);
+		};
+	}
+
+	// Bước 2: khởi tạo hàm closure
+	var messageFunc = showMessage();
+
+	// Bước 3: Chạy hàm closure
+	messageFunc();
+	
+	/*========== Thử closure 3 tầng xem sao :v @_@ :D >_< ========*/
+	function firstLayer(message1) {
+		console.log("This is first layer, message1 = " + message1);
+		return function(message2) {
+			console.log("This is first layer, message2 = " + message2);
+			return function(message3) {
+				console.log("This is third layer, message3 = " + message3);
+			}
+		}
+	}
+	var layer2 = firstLayer("hello layer 1st");
+	var layer3 = layer2("hello layer 2nd");
+	layer3("hello layer 3rd");
+	
+	//Có thể viết như sau dễ hiểu hơn
+	var layer1 = firstLayer;
+	var layer2 = layer1("hello layer 1st");
+	var layer3 = layer2("hello layer 2nd");
+	layer3("hello layer 3rd");
+	
+	console.log(layer1);
+	console.log(layer2);
+	console.log(layer3);
+	
+	console.log("========================");
+	
+	/*============ callback demo ==============*/
+	setTimeout(function(){
+		console.log("This is callback function");
+	}, 2000);
+	
+	var fruits = [ "mango", "guava", "strawberry", "apple", "banana" ];
+	
+	//tham số thứ nhất value là giá trị của phần tử đang lặp, tham số thứ hai index là vị trí của phần tử đó
+	fruits.forEach(function(value, index){
+		console.log(index + ": " + value);
+	});
+
+	//another example
+	// Hàm tạo chuỗi mật khẩu
+	function createPassword(callback) {
+		return callback('freetuts.net');
+	}
+	 
+	// Sử dụng
+	var password = createPassword(function (secret_key) {
+		return secret_key;
+	});
+
+	console.log(password);
+</script>
+</head>
+<body>
+	<div>
+		Closure function là một <b>hàm được tạo ra từ bên trong một hàm
+		khác</b> (hàm cha), nó có thể sử dụng các biến toàn cục, biến cục bộ của
+		hàm cha và biến cục bộ của chính nó. Việc viết hàm theo kiểu closure
+		trong một số trường hợp sẽ giúp code nhìn sáng và dễ quản lý hơn, linh
+		hoạt hơn trong việc xử lý các chức năng
+	</div>
+
+	<div>Trong Javascript thì function được coi là first-class
+		objects, điều này có nghĩa function cũng là một loại Object nên ta có
+		thể sử dụng nó giống như các object bình thường khác. Chúng ta có thể
+		<b>lưu trữ function trong một biến, truyền tham số là một function,
+		return một function (closure function)</b>. Callback function là cách
+		truyền tham số là một function</div>
+		
+	<div>Callback function có thể được hiểu nôm na là một function A
+		được truyền vào một function B thông qua danh sách các tham số của B.
+		Lúc này tại hàm B sẽ gọi đến hàm A để thực hiện một chức năng nào đó
+		mà A đang nắm giữ. Javascript là một ngôn ngữ lập trình hướng sự kiện
+		và bất đồng bộ nên callback function đóng vai trò rất quan trọng, bạn
+		sẽ truyền một callback function vào các sự kiện và xử lý bất đồng bộ
+		đó</div>
+	<div>hàm closure sẽ được định nghĩa bên trong một hàm, mà
+		callback function lại là một hàm và nó được xử lý bên trong một hàm
+		khác (đúng với định nghĩa closure), chỉ có một điều khác đó là hàm
+		closure được truyền vào thông qua tham số.</div>
+</body>
+</html>
